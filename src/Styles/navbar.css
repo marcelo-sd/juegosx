@@ -1,0 +1,18 @@
+.navbarIndex{
+    grid-area: header;
+}
+nav {
+    background-color: #530909; /* Fondo negro oscuro */
+    display: flex; /* Los elementos se muestran en horizontal */
+    justify-content: space-around; /* Espacio proporcional entre los elementos */
+}
+
+ul {
+    list-style: none; /* Elimina los puntos de la lista */
+    display: flex; /* Los elementos de la lista se muestran en horizontal */
+    justify-content: space-around; /* Espacio proporcional entre los elementos de la lista */
+}
+
+li, button {
+    color: #ffffff; /* Texto blanco para mejor contraste con el fondo negro */
+}
