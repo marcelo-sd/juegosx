@@ -10,13 +10,13 @@ const Navbar = () => {
           
           
           <li id="mercado-item" className="navbar-item">
-            <Link to="mercado">Mercado</Link>
+            <Link to="./mercado">Mercado</Link>
           </li>
           <li id="game-item" className="navbar-item">
-            <Link to="game">Juego</Link>
+            <Link to="./game">Juego</Link>
           </li>
           <li id="llamada-item" className="navbar-item">
-            <Link to="llamada">Llamada</Link>
+            <Link to="./llamada">Llamada</Link>
           </li>
           <button
             id="logout-button"
