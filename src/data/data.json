@@ -1,0 +1,21 @@
+{
+    "response": {
+      "usuarios": [
+        {
+          "nombre": "Usuario1",
+          "id": "123",
+          "contraseña": "contraseña1",
+          "descripcion": "Esta es una descripción del usuario 1",
+          "img": "ruta/a/la/imagen1.jpg"
+        },
+        {
+          "nombre": "Usuario2",
+          "id": "456",
+          "contraseña": "contraseña2",
+          "descripcion": "Esta es una descripción del usuario 2",
+          "img": "ruta/a/la/imagen2.jpg"
+        }
+      ]
+    }
+  }
+  

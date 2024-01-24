@@ -1,3 +1,48 @@
+/* Estilo para el contenedor de los usuarios */
+.user-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 40px; /* Esto añade un espacio entre las cajas */
+    justify-items: center;
+}
+  
 .introcls{
     grid-area: cuerpo;
+}
+  
+/* Estilo para las cajas de los usuarios */
+.user-card {
+    background-color: lightgreen;
+    width: 200px;
+    height: 300px;
+    margin: 10px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    border-radius: 10px; /* Esto hace que los bordes de las cajas sean redondeados */
+    border: 2px solid darkgreen; /* Esto añade un borde de color verde oscuro a las cajas */
+}
+  
+/* Estilo para las cajas de los usuarios al pasar el mouse por encima */
+.user-card:hover {
+    transform: scale(1.1);
+}
+  
+/* Estilo para los botones */
+.user-card button {
+    background-color: lightblue;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+  
+/* Estilo para los botones al seleccionarlos */
+.user-card button:active {
+    background-color: blue;
 }

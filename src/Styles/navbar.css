@@ -1,18 +1,56 @@
 .navbarIndex{
     grid-area: header;
 }
-nav {
-    background-color: #530909; /* Fondo negro oscuro */
-    display: flex; /* Los elementos se muestran en horizontal */
-    justify-content: space-around; /* Espacio proporcional entre los elementos */
-}
-
-ul {
-    list-style: none; /* Elimina los puntos de la lista */
-    display: flex; /* Los elementos de la lista se muestran en horizontal */
-    justify-content: space-around; /* Espacio proporcional entre los elementos de la lista */
-}
-
-li, button {
-    color: #ffffff; /* Texto blanco para mejor contraste con el fondo negro */
-}
+/* Estilo para la barra de navegación */
+#navbar {
+    background-color: blue;
+    padding: 20px;
+  }
+  
+  /* Estilo para la lista de la barra de navegación */
+  .navbar-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  /* Estilo para los elementos de la lista de la barra de navegación */
+  .navbar-item {
+    float: left;
+    margin-right: 20px;
+  }
+  
+  /* Estilo para los enlaces de la lista de la barra de navegación */
+  .navbar-item a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: font-size 0.3s ease;
+  }
+  
+  /* Estilo para los enlaces de la lista de la barra de navegación al pasar el mouse por encima */
+  .navbar-item a:hover {
+    font-size: 18px;
+  }
+  
+  /* Estilo para los botones de la barra de navegación */
+  .navbar-button {
+    background-color: lightblue;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Estilo para los botones de la barra de navegación al seleccionarlos */
+  .navbar-button:active {
+    background-color: darkblue;
+  }
+  
