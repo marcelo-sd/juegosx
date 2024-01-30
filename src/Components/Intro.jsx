@@ -1,16 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import "../Styles/intro.css"
+import { Link } from "react-router-dom";
+import {UsuChatsContext} from '../context/UsuarioChatsContex'
+/* import io from 'socket.io-client';
 
-const UserCard = ({ usuario }) => (
-  <div className="user-card" id={`user-card-${usuario.id}`}>
-    {/* <img src={usuario.img} alt={usuario.nombre} className="user-img" id={`user-img-${usuario.id}`} /> */}
-    <h2 className="user-name" id={`user-name-${usuario.id}`}>{usuario.nombre}</h2>
-    <p className="user-desc" id={`user-desc-${usuario.id}`}>{usuario.descripcion}</p>
-    <button className="chat-button" id={`chat-button-${usuario.id}`}>Chat</button>
-    <button className="video-call-button" id={`video-call-button-${usuario.id}`}>Videollamada</button>
-  </div>
-);
+
+const socket = io('http://localhost:5000'); */
+
+
+
+const UserCard = ({ usuario }) => {
+
+  const { cookieValue, updateCookieChat } = useContext(UsuChatsContext);
+ // const [usuario, setusuario] = useState(second)
+
+  const handlerClick = () => {
+    updateCookieChat(usuario.nombre); // Usa updateCookie para cambiar el valor de la cookie
+    alert(`usuario pretario conectado: ${usuario.nombre}`);
+
+     //startPrivateChat (usuario)
+  };
+
+/*   const startPrivateChat = (otherUsername) => {
+    socket.emit('startPrivateChat', otherUsername);
+  };
+ */
+
+
+  return (
+    <div className="user-card" id={`user-card-${usuario.id}`}>
+      {/* <img src={usuario.img} alt={usuario.nombre} className="user-img" id={`user-img-${usuario.id}`} /> */}
+      <h2 className="user-name" id={`user-name-${usuario.id}`}>{usuario.nombre}</h2>
+      <p className="user-desc" id={`user-desc-${usuario.id}`}>{usuario.descripcion}</p>
+      <Link to="chat">
+        <button className="chat-button" id={`chat-button-${usuario.id}`}
+          onClick={handlerClick}
+        >Chat</button>
+      </Link>
+      <button className="video-call-button" id={`video-call-button-${usuario.id}`}>Videollamada</button>
+    </div>
+  );
+};
 
 const UserList = () => {
   const [usuarios, setUsuarios] = useState([]);

@@ -32,6 +32,9 @@ const Navbar = () => {
           <li id="mercado-item" className="navbar-item">
             <Link to="/mercado">Mercado</Link>
           </li>
+          <li id="mercado-item" className="navbar-item">
+            <Link to="/uConec">Usuarios</Link>
+          </li>
           <li id="game-item" className="navbar-item">
             <Link to="/game">Juego</Link>
           </li>
