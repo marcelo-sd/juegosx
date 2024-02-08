@@ -1,34 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
-function ListaDeUsuarios() {
-  const [usuariosConectados, setUsuariosConectados] = useState([]);
+const socket = io('http://localhost:5000');
+
+function App() {
+  const [users, setUsers] = useState({});
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
-
-    // Escucha los eventos de 'usuarioConectado' y 'usuarioDesconectado'
-    socket.on('usuarioConectado', (username) => {
-      setUsuariosConectados((prev) => [...prev, username]);
+    // Escuchar el evento 'usConccs'
+    socket.on('usConccs', (users) => {
+      console.log('Usuarios conectados:', users);
+      setUsers(users);
     });
 
-    socket.on('usuarioDesconectado', (username) => {
-      setUsuariosConectados((prev) => prev.filter((nombreUsuario) => nombreUsuario !== username));
+
+    socket.on('message', (data) => {
+      // Actualizar el estado con el mensaje recibido
+    
+      console.log(data.text)
     });
 
-    return () => socket.disconnect(); // Desconecta cuando el componente se desmonta
+    // Emitir el evento 'obtenerUs' al cargar el componente
+    socket.emit('obtenerUs');
   }, []);
 
   return (
     <div>
-      {usuariosConectados.map((nombre) => (
-        <div key={nombre}>
-          {nombre}
-          <span style={{ color: 'green' }}>●</span>
-        </div>
+      <h1>Usuarios conectados:</h1>
+      {Object.keys(users).map((username) => (
+        <p key={username}>{username}</p>
       ))}
     </div>
   );
-  
 }
-export default ListaDeUsuarios
+
+export default App;

@@ -2,31 +2,58 @@ import React, { useState, useEffect,useContext } from "react";
 import io from "socket.io-client";
 import Cookies from "universal-cookie";
 import {UsuChatsContext} from '../context/UsuarioChatsContex'
+import { SocketContext } from '../context/SockedContex';
 
 
-const socket = io("http://localhost:5000");
+
 const cookies = new Cookies();
 
-function Chat() {
+
+
+function Chat(location) {
+  const argumento = location.state ? location.state.message : "Valor predeterminado";
+  const socket = useContext(SocketContext);
+
   const { cookieValue, updateCookieChat } = useContext(UsuChatsContext);
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [destinatario, setdestiantario] = useState('')
 
- // const [Usuario, setUsuario] = useState(cookies.get("nombreSer"));
 
   const [ActualUsuario, setActualUsuario] = useState("");
 
   useEffect(() => {
     // Leer el valor de la cookie 'nombre' y asignarlo al estado
+    console.log(location.state)
+console.log(argumento)
+    socket.on('privateChatMessage', (data) => {
+      setMessages((messages) => [...messages, data.msg]);
+      setdestiantario(data.sender)
+      console.log(`Mensaje de ${data.sender}: ${data.msg}`);
+
+
+
+          // Escuchar el evento 'test'
+         /*  socket.on('test', (message, callback) => {
+            console.log(message); // Debería imprimir 'Estás en la sala correcta'
+            callback('received');
+          }); */
+
+
+
+    
+    });
+
+
+
+
      setActualUsuario(cookies.get("nombre"));
 
     const username = ActualUsuario; // Aquí debes poner el nombre de usuario del cliente actual
-    socket.emit("userConnected", username); 
+    //socket.emit("userConnected", username); 
 
-    socket.on("privateChatMessage", (msg) => {
-      setMessages((messages) => [...messages, msg]);
-    });
+
 
     // Escucha el evento 'error' y maneja el mensaje de error
     socket.on("error", (errorMsg) => {
@@ -48,13 +75,16 @@ function Chat() {
   
 
 
-  const startPrivateChat = (otherUsername) => {
-    socket.emit("startPrivateChat", otherUsername);
-  };
 
   const submitMessage = (e) => {
     e.preventDefault();
-    const otherUsername = cookieValue; // Aquí debes poner el nombre de usuario del otro cliente
+    let otherUsername;
+    if (!destinatario || destinatario.trim() === '') {
+      otherUsername = cookieValue; // Aquí debes poner el nombre de usuario del otro cliente
+    } else {
+      otherUsername = destinatario; // Aquí debes poner el nombre de usuario del otro cliente
+    }
+    
     socket.emit("privateChatMessage", message, otherUsername);
     setMessage("");
   };
@@ -79,7 +109,8 @@ function Chat() {
 
         <h2>chaterar con:</h2>
 
-        <h1 style={{ color: "red" }}>{cookieValue}</h1>
+        <h1 style={{ color: "red" }}>{cookieValue || argumento}</h1>
+
         <button
             id="logout-button"
             className="navbar-button"
@@ -91,7 +122,8 @@ function Chat() {
         <h2>{ActualUsuario}</h2>
 
         <button type="submit">Enviar</button>
-        <button onClick={() => startPrivateChat(cookieValue)}>
+    
+        <button onClick={() => socket.emit("startPrivateChat", cookieValue)}>
           Iniciar chat privado
         </button>
       </form>

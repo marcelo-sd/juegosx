@@ -3,29 +3,32 @@ import axios from 'axios';
 import "../Styles/intro.css"
 import { Link } from "react-router-dom";
 import {UsuChatsContext} from '../context/UsuarioChatsContex'
-/* import io from 'socket.io-client';
+import { SocketContext } from '../context/SockedContex';
 
-
-const socket = io('http://localhost:5000'); */
 
 
 
 const UserCard = ({ usuario }) => {
 
+  const socket = useContext(SocketContext);
+
   const { cookieValue, updateCookieChat } = useContext(UsuChatsContext);
  // const [usuario, setusuario] = useState(second)
 
-  const handlerClick = () => {
-    updateCookieChat(usuario.nombre); // Usa updateCookie para cambiar el valor de la cookie
-    alert(`usuario pretario conectado: ${usuario.nombre}`);
+ const handlerClick = () => {
+  updateCookieChat(usuario.nombre); // Usa updateCookie para cambiar el valor de la cookie
+  alert(`usuario prestario conectado: ${usuario.nombre}`);
 
-     //startPrivateChat (usuario)
-  };
+  // Emitir el evento y pasar una función de callback
+  socket.emit("startPrivateChat", usuario.nombre, (confirmation) => {
+    if (confirmation === 'received') {
+      console.log(`El servidor recibió el evento startPrivateChat para ${usuario.nombre}`);
+    }
+  });
+  console.log('supuestamente se emitio')
+};
 
-/*   const startPrivateChat = (otherUsername) => {
-    socket.emit('startPrivateChat', otherUsername);
-  };
- */
+
 
 
   return (
@@ -50,6 +53,9 @@ const UserList = () => {
     const fetchData = async () => {
       const result = await axios('http://localhost:3000/getUsers');
       setUsuarios(result.data);
+
+  
+
     };
     fetchData();
   }, []);

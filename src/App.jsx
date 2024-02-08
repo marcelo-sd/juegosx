@@ -10,11 +10,14 @@ import BorradorLogin from './Components/BorradorLogin.jsx'
 import {CookieProvider} from './context/CookieContex.jsx'
 import {UsuChatsProvider} from './context/UsuarioChatsContex.jsx'
 import ListaDeUsuarios from './Components/UsuaConectados.jsx'
+import MensajeApertura from './Components/MensajeApertura.jsx'
+import {SocketProvider} from './context/SockedContex.jsx'
 
 function App() {
   return (
     <>
       <div className="App">
+        <SocketProvider>
      < UsuChatsProvider>
         <CookieProvider>
         <Router>
@@ -27,11 +30,13 @@ function App() {
             <Route path="/chat" element={<Chats />} />
             <Route path="/login" element={<BorradorLogin/>} />
             <Route path="/uConec" element={<ListaDeUsuarios/>} />
+            <Route path="/mensaje" element={<MensajeApertura/>} />
          
           </Routes>
         </Router>
         </CookieProvider>
         </UsuChatsProvider>
+        </SocketProvider>
       </div>
     </>
   );

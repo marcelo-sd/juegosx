@@ -3,16 +3,37 @@ import "../styles/navbar.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { CookieContext } from "../context/CookieContex";
+import io from "socket.io-client";
+
+import { SocketContext } from '../context/SockedContex';
 
 const Navbar = () => {
+  const socket = useContext(SocketContext);
+
   const { cookieValue, updateCookie } = useContext(CookieContext);
+  const [alerta, setAlerta] = useState(0);
+  const [contenidos, setContenidos] = useState([])
 
   useEffect(() => {
-    console.log("nombre");
-  }, [cookieValue]);
+
+ 
+
+  socket.on('test', (message) => {
+    console.log(message);
+    setAlerta(alerta => alerta + 1); // Increment alerta by 1
+    setContenidos(contenidos => [...contenidos, message]); // Add new message to contenidos array
+  });
+
+  return () => {
+    // Desvincula el evento 'test'
+    socket.off('test' );
+  };
+
+
+  }),[]; 
 
   const handleClick = () => {
-    updateCookie(''); // Usa updateCookie para borrar el valor de la cookie
+    updateCookie(""); // Usa updateCookie para borrar el valor de la cookie
     alert("Sesión cerrada");
   };
 
@@ -47,10 +68,23 @@ const Navbar = () => {
           <li id="chat-item" className="navbar-item">
             <Link to="/login">login</Link>
           </li>
-
-          <li>
-            <h3>{cookieValue}</h3>
+          <li id="chat-item" className="navbar-item">
+            <Link to="/mensaje">mensaje</Link>
           </li>
+         
+          <li id="alert-item" className="navbar-item">
+  <div id="alert-counter">{alerta || 0}</div>
+  <div id="alert-content">
+    {contenidos.map((contenido, index) => (<>
+            <p key={index}>{contenido}</p>
+            <Link to={{
+                pathname: "/chat",
+                state: { message: contenido }
+            }}><button>ir al chat</button></Link>
+            </>
+    ))}
+  </div>
+</li>
 
           <button
             id="logout-button"

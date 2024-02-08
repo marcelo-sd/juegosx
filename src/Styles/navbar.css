@@ -53,4 +53,38 @@
   .navbar-button:active {
     background-color: darkblue;
   }
+  /* css para las notificaciones
+  /* CSS for the notification feature */
+#alert-item {
+  position: relative;
+  display: inline-block;
+}
+
+#alert-counter {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 1px 7px;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 12px;
+}
+
+#alert-content {
+  display: none;
+  width: 200px;
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+}
+
+#alert-item:hover #alert-content {
+  display: block;
+}
+
   

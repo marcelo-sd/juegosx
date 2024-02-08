@@ -1,11 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext,useEffect } from 'react';
 import { CookieContext } from "../context/CookieContex";
 import io from "socket.io-client";
+import { SocketContext } from '../context/SockedContex';
 
 
-const socket = io("http://localhost:5000");
 
 function BorradorLogin() {
+
+  
+  const socket = useContext(SocketContext);
   const [nombre, setNombre] = useState('');
   const [id, setId] = useState('');
   const { updateCookie } = useContext(CookieContext); // Importa updateCookie desde el contexto
@@ -14,6 +17,30 @@ function BorradorLogin() {
   const handleNombreChange = (event) => {
     setNombre(event.target.value);
   };
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", (ev) => {  
+      ev.preventDefault();
+      return socket.emit('userDisconnected', cookieValue);
+    });
+  }, []);
+  /////////////////////////////////////////////
+  useEffect(() => {
+
+
+/*       // Escuchar el evento 'test'
+      socket.on('test', (message, callback) => {
+        console.log(message); // Debería imprimir 'Estás en la sala correcta'
+        callback('received');
+      }); */
+
+      
+    if (cookieValue) {
+      socket.emit("userConnected", cookieValue);
+    }
+  }, [cookieValue]);
+  ////////////////////////////////////////////////////
+
 
   const handleIdChange = (event) => {
     setId(event.target.value);
